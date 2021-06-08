@@ -1,4 +1,5 @@
 import {default as Timer, range} from './timer-util.js';
+import  './howler.js';
 
 const form = document.querySelector('#timer');
 const hours = form.querySelector('#hours');
@@ -26,7 +27,7 @@ const timer = new Timer();
 btnStart.addEventListener('click', () => {
     const settings = {
         cbUpdate: updateTime,
-        cbStop: clearTimer
+        cbStop: stopTimer
     };
     // При первом запуске добавляем время таймера
     if (!begin) {
@@ -68,4 +69,12 @@ function clearTimer() {
     text.textContent = '0:00:00';
     btnStart.textContent = 'Старт';
     pause = false;
+}
+
+function stopTimer() {
+    const sound = new Howl({
+        src: ['sound/alarm.mp3'],
+    });
+   sound.play();
+   clearTimer();
 }
